@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include <rgblight.h>
 
 #define _NUM_LAYER 1
 #define _FL 2 // function layer, shortened for the keymaps section

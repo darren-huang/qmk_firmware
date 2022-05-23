@@ -91,7 +91,7 @@ void save_rgb(rgblight_config_t* config) {
     config->hue    = rgblight_config.hue;
     config->sat    = rgblight_config.sat;
     config->val    = rgblight_config.val;
-} 
+}
 
 // modifying RGB settings  ----------------------
 
@@ -99,9 +99,9 @@ void load_rgb(rgblight_config_t* config) {
     rgblight_mode(config->mode);
     rgblight_sethsv(config->hue, config->sat, config->val);
     if (config->enable) {
-       rgblight_enable(); 
+       rgblight_enable();
     } else {
-       rgblight_disable(); 
+       rgblight_disable();
     }
 }
 
@@ -182,7 +182,7 @@ enum custom_keycodes {
     TAB_R,   // move to the tab to the right (for chrome)
     TAB_L,   // move to the tab to the left (for chrome)
 
-    VIM_MD,  // enter vim mode 
+    VIM_MD,  // enter vim mode
     VIM_RST, // reset vim settings (for use only in the vim layer)
     REG_MD,  // enter insert mode (or just regular mode)
     NUM_MD,  // enter number mode
@@ -199,7 +199,7 @@ enum custom_keycodes {
 
     VIM_D,   // vim d command (activates the delete commands)
     VIM_Y,   // vim y command (activates the yank commands)
-    DY_N_WD, // delete/yank next word ('dw' in vim) 
+    DY_N_WD, // delete/yank next word ('dw' in vim)
     DY_B_WD, // delete/yank back (last) word ('db' in vim)
     DY_END,  // delete/yank until the end of line
     DY_HOME, // delete/yank until the beginning of line
@@ -208,7 +208,7 @@ enum custom_keycodes {
     DY_UNSET,// Unset the DY mode (restore old rgb and mode values & OSL)
 
     NEW_LN,  // add a new line
-    V_PASTE, // paste in vim 
+    V_PASTE, // paste in vim
 
     PRE_WHI, // turn on rgb preset
     PRE_DRA, // turn on rgb preset
@@ -551,7 +551,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_LSFT,  KC_LSFT,  KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,  KC_RSFT,            KC_UP,    KC_MPLY,
     KC_LCTL,  KC_LGUI,  KC_LALT,                      KC_SPC,   KC_SPC,   KC_SPC,                       KC_RALT,  MO(_FL),  MO(_FL),  KC_LEFT,  KC_DOWN,  KC_RGHT
   ),
-  
+
   [1] = LAYOUT( // num layer
     _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
     _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
@@ -560,7 +560,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,  _______,  _______,  _______,  _______,  _______,  _______,  KC_0,     KC_0,     _______,  _______,  _______,  _______,            _______,  _______,
     _______,  _______,  _______,                      _______,  _______,  _______,                      _______,  _______,  _______,  _______,  _______,  _______
   ),
-  
+
   [2] = LAYOUT( // function layer
     RESET,    PRE_TWK,  PRE_DRA,  PRE_RED,  PRE_WHI,  _______,  _______,  _______,  _______,  _______,  _______,  RGB_HUD,  RGB_HUI,  RGB_RMOD, RGB_MOD,  _______,
     _______,  X(D_FC),  X(PLEAD), X(IRONY), X(SNEK),  _______,  _______,  _______,  _______,  _______,  KC_HOME,  RGB_VAD,  RGB_VAI,  RGB_TOG,  RGB_TOG,  KC_SLEP,

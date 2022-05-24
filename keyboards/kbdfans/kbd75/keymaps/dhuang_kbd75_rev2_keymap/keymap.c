@@ -205,7 +205,7 @@ enum custom_keycodes {
     DY_HOME, // delete/yank until the beginning of line
     D_LINE,  // delete current line
     Y_LINE,  // yank current line
-    DY_UNSET,// Unset the DY mode (restore old rgb and mode values & OSL)
+    DY_____,// Unset the DY mode (restore old rgb and mode values & OSL)
 
     NEW_LN,  // add a new line
     V_PASTE, // paste in vim
@@ -461,7 +461,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else { // on release:
         }
         break;
-    case DY_UNSET:
+    case DY_____:
         if (record->event.pressed) { // on press
             load_rgb(&dy_mode_prev_rgb);
         } else { // on release:
@@ -580,12 +580,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [4] = LAYOUT( // delete / yank mode layer
-    DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET,
-    DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_END,   DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_HOME,  DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET,
-    DY_UNSET, DY_UNSET, DY_N_WD,  DY_UNSET, DY_UNSET, DY_UNSET, Y_LINE,   DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET,           DY_UNSET,
-    DY_UNSET, DY_UNSET, DY_UNSET, D_LINE,   DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET,                     DY_UNSET, DY_UNSET,
-    XXXXXXX,  DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_B_WD,  DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, XXXXXXX,            DY_UNSET, DY_UNSET,
-    DY_UNSET, DY_UNSET, DY_UNSET,                     DY_UNSET, DY_UNSET, DY_UNSET,                     DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET, DY_UNSET
+    DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____,
+    DY_____,  DY_____,  DY_____,  DY_____,  DY_END,   DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  DY_HOME,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____,
+    DY_____,  DY_____,  DY_N_WD,  DY_____,  DY_____,  DY_____,  Y_LINE,   DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____,            DY_____,
+    DY_____,  DY_____,  DY_____,  D_LINE,   DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____,                      DY_____,  DY_____,
+    XXXXXXX,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  DY_B_WD,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  XXXXXXX,            DY_____,  DY_____,
+    DY_____,  DY_____,  DY_____,                      DY_____,  DY_____,  DY_____,                      DY_____,  DY_____,  DY_____,  DY_____,  DY_____,  DY_____
   ),
 
 };

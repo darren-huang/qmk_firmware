@@ -19,8 +19,9 @@
 
 #define _NUM_LAYER 1
 #define _FL 2 // function layer, shortened for the keymaps section
-#define _VIM_LAYER 3
-#define _DY_LAYER 4
+#define _CL 3 // control layer, 2nd function layer
+#define _VIM_LAYER 4
+#define _DY_LAYER 5
 
 // Define Types
 enum Keyboard_Mode {Regular_Mode, Num_Mode, Vim_Mode, Y_Mode, D_Mode} KB_mode = Regular_Mode;
@@ -221,7 +222,7 @@ enum custom_keycodes {
     DY_HOME, // delete/yank until the beginning of line
     D_LINE,  // delete current line
     Y_LINE,  // yank current line
-    DY_UNSET,// Unset the DY mode (restore old rgb and mode values & OSL)
+    DY_____,// Unset the DY mode (restore old rgb and mode values & OSL)
 
     NEW_LN,  // add a new line
     V_PASTE, // paste in vim
@@ -477,7 +478,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else { // on release:
         }
         break;
-    case DY_UNSET:
+    case DY_____:
         if (record->event.pressed) { // on press
             load_rgb(&dy_mode_prev_rgb);
         } else { // on release:
@@ -561,16 +562,48 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       [0] = LAYOUT_tkl_ansi_tsangan(
         KC_ESC,           KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,             KC_PSCR, KC_SLCK, KC_MPLY,
         KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,            KC_INS,  KC_HOME, KC_VOLU,
-        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,            KC_DEL,  KC_END,  KC_PGDN,
-        KC_ESC,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,          KC_ENT,
+        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,            KC_DEL,  KC_END,  KC_VOLD,
+        KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,          KC_ENT,
         KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,          KC_RSFT,                              KC_UP,
-        KC_LCTL, KC_LGUI, KC_LALT,                   KC_SPC,                                      KC_RALT,          KC_RGUI, KC_RCTL,            KC_LEFT, KC_DOWN, KC_RGHT),
+        KC_LCTL, KC_LGUI, KC_LALT,                   KC_SPC,                                      MO(_FL),          MO(_FL), MO(_CL),            KC_LEFT, KC_DOWN, KC_RGHT),
 
-      [1] = LAYOUT_tkl_ansi_tsangan(
-        _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,            _______, _______, _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,            RGB_TOG, RGB_HUI, RGB_SAI,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,            RGB_MOD, RGB_HUD, RGB_SAD,
+      [1] = LAYOUT_tkl_ansi_tsangan( // num layer
+        _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,            KC_7, KC_8, KC_9,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,            KC_4, KC_5, KC_6,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,            KC_1, KC_2, KC_3,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,                              RGB_VAI,
-        _______, _______, _______,                   _______,                                     _______,          _______, _______,            RGB_RMOD,RGB_VAD, RGB_MOD)
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,                              _______,
+        _______, _______, _______,                   _______,                                     _______,          _______, KC_0,            _______, _______, _______),
+
+      [2] = LAYOUT_tkl_ansi_tsangan( // function layer
+        RESET,            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,            _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, _______, _______, _______,            RGB_TOG, RGB_HUI, RGB_SAI,
+        KC_ENT,  _______, NEXT_WD, _______, _______, _______, VIM_Y,   M_UNDO,  _______, NEW_LN,  V_PASTE, _______, _______, _______,            RGB_MOD, RGB_HUD, RGB_SAD,
+        VIM_MD,  KC_END,  _______, VIM_D,   _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,          _______,
+        VI_LSHFT,_______, KC_BSPC, KC_DEL,  _______, _______, BACK_WD, _______, _______, TAB_L,   TAB_R,            VI_RSHFT,                             RGB_VAI,
+        _______, _______, _______,                   _______,                                     _______,          _______, NUM_MDT,            RGB_RMOD,RGB_VAD, RGB_MOD)
+
+      [3] = LAYOUT_tkl_ansi_tsangan( // control layer (2nd function layer)
+        RESET,            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,            _______, _______, KC_MUTE,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,            _______, _______, KC_MNXT,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,            KC_SLEP, _______, KC_MPRV,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,                              KC_PGUP,
+        _______, _______, _______,                   _______,                                     XXXXXXX,          XXXXXXX, _______,            VDKTP_L, KC_PGDN, VDKTP_R),
+
+      [4] = LAYOUT_tkl_ansi_tsangan( // vim mode layer
+        REG_MD,           _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,            _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, _______, _______, _______,            _______, _______, _______,
+        _______, _______, NEXT_WD, _______, _______, _______, VIM_Y,   M_UNDO,  REG_MD,  NEW_LN,  V_PASTE, _______, _______, _______,            _______, _______, _______,
+        VIM_RST, APPEND,  _______, VIM_D,   _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,          _______,
+        VI_LSHFT,_______, _______, KC_DEL,  _______, _______, BACK_WD, _______, _______, _______, _______,          VI_RSHFT,                             _______,
+        _______, _______, _______,                   _______,                                     _______,          _______, _______,            _______, _______, _______),
+
+      [5] = LAYOUT_tkl_ansi_tsangan( // delete / yank mode layer
+        DY_____,          DY_____, DY_____, DY_____, DY_____, DY_____, DY_____, DY_____, DY_____, DY_____, DY_____, DY_____, DY_____,            DY_____, DY_____, DY_____,
+        DY_____, DY_____, DY_____, DY_____, DY_END,  DY_____, DY_____, DY_____, DY_____, DY_____, DY_____, DY_____, DY_____, DY_____,            DY_____, DY_____, DY_____,
+        DY_____, DY_____, DY_N_WD, DY_____, DY_____, DY_____, Y_LINE,  DY_____, DY_____, DY_____, DY_____, DY_____, DY_____, DY_____,            DY_____, DY_____, DY_____,
+        DY_____, DY_____, DY_____, D_LINE,  DY_____, DY_____, DY_____, DY_____, DY_____, DY_____, DY_____, DY_____,          DY_____,
+        XXXXXXX, DY_____, DY_____, DY_____, DY_____, DY_____, DY_____, DY_____, DY_____, DY_____, DY_____,          DY_____,                             DY_____,
+        DY_____, DY_____, DY_____,                   DY_____,                                     DY_____,          DY_____, DY_____,           DY_____, DY_____, DY_____)
 };

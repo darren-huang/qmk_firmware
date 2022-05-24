@@ -20,7 +20,8 @@
                 "/usr/lib/gcc/avr/5.4.0/../../../avr/include/*",
                 "/usr/lib/gcc/avr/5.4.0/../../../avr/include/**",
                 "${workspaceFolder}/*",
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/quantum"
             ],
             "defines": [
                 "QMK_KEYBOARD_H=<quantum.h>"

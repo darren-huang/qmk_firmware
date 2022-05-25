@@ -30,4 +30,7 @@
 // Turn off rgb if no signal (i think)
 #define RGBLIGHT_SLEEP
 
+#define ENABLE_RGB_MATRIX_PIXEL_FRACTAL
+#define ENABLE_RGB_MATRIX_PIXEL_RAIN
+
 #define QMK_KEYS_PER_SCAN 4

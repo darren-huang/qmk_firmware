@@ -15,7 +15,7 @@
  */
 
 #include QMK_KEYBOARD_H
-#include <rgblight.h>
+#include <rgb_matrix_types.h>
 
 #define _NUM_LAYER 1
 #define _FL 2 // function layer, shortened for the keymaps section
@@ -45,11 +45,10 @@ const uint32_t PROGMEM unicode_map[] = {
 // Global Vars
 Keyboard_Mode dy_mode_prev_mode = Regular_Mode;
 
-extern rgblight_config_t rgblight_config;
-rgblight_config_t vim_mode_prev_rgb;
-rgblight_config_t dy_mode_prev_rgb;
-rgblight_config_t num_mode_prev_rgb;
-rgblight_config_t jptr_mode_prev_rgb;
+rgb_config_t vim_mode_prev_rgb;
+rgb_config_t dy_mode_prev_rgb;
+rgb_config_t num_mode_prev_rgb;
+rgb_config_t jptr_mode_prev_rgb;
 
 bool JPTR_Mode_On = false;
 
@@ -101,24 +100,24 @@ void dy_vim_mode_off(void) {
 
 // saving RGB settings  ----------------------
 
-void save_rgb(rgblight_config_t* config) {
+void save_rgb(rgb_config_t* config) {
     //save current rgb settings
-    config->enable = rgblight_config.enable;
-    config->mode   = rgblight_config.mode;
-    config->hue    = rgblight_config.hue;
-    config->sat    = rgblight_config.sat;
-    config->val    = rgblight_config.val;
+    config->enable = rgb_matrix_is_enabled();
+    config->mode   = rgb_matrix_get_mode();
+    config->hsv.h  = rgb_matrix_get_hue();
+    config->hsv.s  = rgb_matrix_get_sat();
+    config->hsv.v  = rgb_matrix_get_val();
 }
 
 // modifying RGB settings  ----------------------
 
-void load_rgb(rgblight_config_t* config) {
-    rgblight_mode(config->mode);
-    rgblight_sethsv(config->hue, config->sat, config->val);
+void load_rgb(rgb_config_t* config) {
+    rgb_matrix_mode(config->mode);
+    rgb_matrix_sethsv(config->hsv.h, config->hsv.s, config->hsv.v);
     if (config->enable) {
-       rgblight_enable();
+       rgb_matrix_enable();
     } else {
-       rgblight_disable();
+       rgb_matrix_disable();
     }
 }
 
@@ -128,63 +127,70 @@ enum rgb_preset {
     DRACULA_RGB,
     CYAN_RGB,
     GOLD_RGB,
-    TWK_RGB,
+    FRC_RGB,
     VIM_RGB,
     VIM_D_RGB,
     VIM_Y_RGB,
+    H_MAP_RGB,
 };
 
 void set_rgb_preset(enum rgb_preset preset) {
     switch (preset) {
     case WHITE_RGB:
-        rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
-        rgblight_sethsv(HSV_WHITE);
-        rgblight_enable();
+        rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+        rgb_matrix_sethsv(HSV_WHITE);
+        rgb_matrix_enable();
         break;
     case RED_RGB:
-        rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
-        rgblight_sethsv(HSV_RED);
-        rgblight_enable();
+        rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+        rgb_matrix_sethsv(HSV_RED);
+        rgb_matrix_enable();
         break;
     case DRACULA_RGB:
-        rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
+        rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
         //rgblight_setrgb(189, 147, 249);
-        rgblight_sethsv(187, 105, 249);
-        rgblight_enable();
+        rgb_matrix_sethsv(187, 105, 249);
+        rgb_matrix_enable();
         break;
     case CYAN_RGB:
-        rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
-        rgblight_sethsv(HSV_CYAN);
-        rgblight_enable();
+        rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+        rgb_matrix_sethsv(HSV_CYAN);
+        rgb_matrix_enable();
         break;
     case GOLD_RGB:
-        rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
-        rgblight_sethsv(HSV_GOLDENROD);
-        rgblight_enable();
+        rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+        rgb_matrix_sethsv(HSV_GOLDENROD);
+        rgb_matrix_enable();
         break;
-    case TWK_RGB:
-        rgblight_mode(RGBLIGHT_MODE_TWINKLE + 4);
-        rgblight_sethsv(HSV_RED);
-        rgblight_enable();
+    case FRC_RGB:
+        rgb_matrix_mode(RGB_MATRIX_PIXEL_FRACTAL);
+        rgb_matrix_sethsv(HSV_RED);
+        rgb_matrix_enable();
         break;
     case VIM_RGB:
         //load vim rgb settings
-        rgblight_mode(RGBLIGHT_MODE_RAINBOW_SWIRL + 5);
-        rgblight_sethsv(rgblight_config.hue, 255,
-                        rgblight_config.val > RGB_val_vim ? rgblight_config.val : RGB_val_vim);
-        rgblight_enable();
+        rgb_matrix_mode(RGB_MATRIX_PIXEL_RAIN);
+        rgb_matrix_sethsv(rgb_matrix_get_hue(), 255,
+                        rgb_matrix_get_val() > RGB_val_vim ? rgb_matrix_get_val() : RGB_val_vim);
+        rgb_matrix_enable();
         break;
     case VIM_D_RGB:
         //load vim d (delete) mode rgb settings
-        rgblight_mode(RGBLIGHT_MODE_SNAKE + 2);
-        rgblight_sethsv(HSV_RED);
-        rgblight_enable();
+        rgb_matrix_mode(RGB_MATRIX_BAND_SPIRAL_VAL);
+        rgb_matrix_sethsv(HSV_RED);
+        rgb_matrix_enable();
         break;
     case VIM_Y_RGB:
         //load vim y (yank) mode rgb settings
-        rgblight_mode(RGBLIGHT_MODE_SNAKE + 3);
-        rgblight_sethsv(HSV_YELLOW);
-        rgblight_enable();
+        rgb_matrix_mode(RGB_MATRIX_BAND_SPIRAL_VAL);
+        rgb_matrix_sethsv(HSV_YELLOW);
+        rgb_matrix_enable();
+        break;
+    case H_MAP_RGB:
+        // typing heatmap mode
+        rgb_matrix_mode(RGB_MATRIX_TYPING_HEATMAP);
+        rgb_matrix_sethsv(HSV_WHITE);
+        rgb_matrix_enable();
         break;
     }
 }
@@ -230,7 +236,8 @@ enum custom_keycodes {
     PRE_WHI, // turn on rgb preset
     PRE_DRA, // turn on rgb preset
     PRE_RED, // turn on rgb preset
-    PRE_TWK, // turn on rgb preset
+    PRE_FRC, // turn on rgb preset
+    PRE_HMP, // turn on rgb heat map preset
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -548,9 +555,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else { // on release:
         }
         break;
-    case PRE_TWK:
+    case PRE_FRC:
         if (record->event.pressed) { // on press
-            set_rgb_preset(TWK_RGB);
+            set_rgb_preset(FRC_RGB);
+        } else { // on release:
+        }
+        break;
+    case PRE_HMP:
+        if (record->event.pressed) { // on press
+            set_rgb_preset(H_MAP_RGB);
         } else { // on release:
         }
         break;
@@ -576,7 +589,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______,                   _______,                                     _______,          _______, KC_0,            _______, _______, _______),
 
       [2] = LAYOUT_tkl_ansi_tsangan( // function layer
-        RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,                     _______, _______, _______,
+        RESET,   PRE_HMP, PRE_WHI, PRE_DRA, PRE_RED, PRE_FRC, _______, _______, _______, _______, _______, _______, _______,                     _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, _______, _______, _______,            RGB_TOG, RGB_HUI, RGB_SAI,
         KC_ENT,  _______, NEXT_WD, _______, _______, _______, VIM_Y,   M_UNDO,  _______, NEW_LN,  V_PASTE, _______, _______, _______,            RGB_MOD, RGB_HUD, RGB_SAD,
         VIM_MD,  KC_END,  _______, VIM_D,   _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,          _______,

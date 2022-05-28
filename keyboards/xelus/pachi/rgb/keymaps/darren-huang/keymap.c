@@ -169,8 +169,8 @@ void set_rgb_preset(enum rgb_preset preset) {
         break;
     case VIM_RGB:
         //load vim rgb settings
-        rgb_matrix_mode(RGB_MATRIX_PIXEL_RAIN);
-        rgb_matrix_sethsv(rgb_matrix_get_hue(), 255,
+        rgb_matrix_mode(ENABLE_RGB_MATRIX_CYCLE_OUT_IN);
+        rgb_matrix_sethsv(rgb_matrix_get_hue(), 240,
                         rgb_matrix_get_val() > RGB_val_vim ? rgb_matrix_get_val() : RGB_val_vim);
         rgb_matrix_enable();
         break;
@@ -183,13 +183,13 @@ void set_rgb_preset(enum rgb_preset preset) {
     case VIM_Y_RGB:
         //load vim y (yank) mode rgb settings
         rgb_matrix_mode(RGB_MATRIX_BAND_SPIRAL_VAL);
-        rgb_matrix_sethsv(HSV_YELLOW);
+        rgb_matrix_sethsv(HSV_SPRINGGREEN);
         rgb_matrix_enable();
         break;
     case H_MAP_RGB:
         // typing heatmap mode
         rgb_matrix_mode(RGB_MATRIX_TYPING_HEATMAP);
-        rgb_matrix_sethsv(HSV_WHITE);
+        rgb_matrix_sethsv(RED_RGB);
         rgb_matrix_enable();
         break;
     }
@@ -594,7 +594,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_ENT,  _______, NEXT_WD, _______, _______, _______, VIM_Y,   M_UNDO,  _______, NEW_LN,  V_PASTE, _______, _______, _______,            RGB_MOD, RGB_HUD, RGB_SAD,
         VIM_MD,  KC_END,  _______, VIM_D,   _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,          _______,
         VI_LSHFT,         KC_BSPC, KC_DEL,  _______, _______, BACK_WD, _______, _______, TAB_L,   TAB_R,   _______, VI_RSHFT,                             RGB_VAI,
-        _______, _______, _______,                   _______,                                     _______,          _______, NUM_MDT,            RGB_RMOD,RGB_VAD, RGB_MOD)
+        _______, _______, _______,                   _______,                                     _______,          _______, NUM_MDT,            RGB_RMOD,RGB_VAD, RGB_MOD),
 
       [3] = LAYOUT_tkl_ansi_tsangan( // control layer (2nd function layer)
         RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,                     _______, _______, KC_MUTE,

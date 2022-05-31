@@ -168,7 +168,7 @@ void set_rgb_preset(enum rgb_preset preset) {
         break;
     case VIM_RGB:
         //load vim rgb settings
-        rgb_matrix_mode(ENABLE_RGB_MATRIX_CYCLE_OUT_IN);
+        rgb_matrix_mode(RGB_MATRIX_CYCLE_OUT_IN);
         rgb_matrix_sethsv(rgb_matrix_get_hue(), 240,
                         rgb_matrix_get_val() > RGB_val_vim ? rgb_matrix_get_val() : RGB_val_vim);
         rgb_matrix_enable();
@@ -188,7 +188,7 @@ void set_rgb_preset(enum rgb_preset preset) {
     case H_MAP_RGB:
         // typing heatmap mode
         rgb_matrix_mode(RGB_MATRIX_TYPING_HEATMAP);
-        rgb_matrix_sethsv(RED_RGB);
+        rgb_matrix_sethsv(HSV_RED);
         rgb_matrix_enable();
         break;
     }
